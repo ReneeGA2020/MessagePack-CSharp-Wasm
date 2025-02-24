@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net8.0;net9.0;net472</TargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
     <NoWarn>$(NoWarn);CS0649</NoWarn>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <DefineConstants Condition=" '$(TargetFramework)' == 'net8.0' or '$(TargetFramework)' == 'net9.0' or '$(TargetFramework)' == 'netstandard2.1' ">$(DefineConstants);SPAN_BUILTIN</DefineConstants>
+    <DefineConstants>$(DefineConstants);SPAN_BUILTIN</DefineConstants>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
 
     <Title>MessagePack for C#</Title>
-    <Description>Extremely Fast MessagePack(MsgPack) Serializer for C# (.NET Framework, .NET 6, Unity, Xamarin).</Description>
+    <Description>Extremely Fast MessagePack(MsgPack) Serializer for C# (.NET Framework, .NET 6,
+      Unity, Xamarin).</Description>
     <PackageTags>MsgPack;MessagePack;Serialization;Formatter;Serializer;Unity;Xamarin</PackageTags>
     <AssemblyName>MessagePack</AssemblyName>
   </PropertyGroup>
@@ -34,9 +35,10 @@
   <ItemGroup>
     <ProjectReference Include="..\MessagePack.Annotations\MessagePack.Annotations.csproj" />
     <!-- We don't consume the analyzers in this library itself,
-         but we reference the project to add a package dependency so users of this library will automatically get the analyzers. -->
+         but we reference the project to add a package dependency so users of this library will
+    automatically get the analyzers. -->
     <ProjectReference Include="..\MessagePack.Analyzers\MessagePack.Analyzers.csproj"
-                      PrivateAssets="none" />
+      PrivateAssets="none" />
   </ItemGroup>
 
   <ItemGroup>

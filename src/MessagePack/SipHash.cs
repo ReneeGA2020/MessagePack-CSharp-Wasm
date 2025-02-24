@@ -11,7 +11,6 @@ using System.Buffers;
 using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 
 namespace MessagePack
 {
@@ -36,22 +35,11 @@ namespace MessagePack
         /// <summary>Initializes a new instance of the <see cref="SipHash"/> class using a random key.</summary>
         public SipHash()
         {
-            using RandomNumberGenerator rng = RandomNumberGenerator.Create();
-#if SPAN_BUILTIN
             Span<byte> key = stackalloc byte[16];
-            rng.GetBytes(key);
-#else
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(16);
-            rng.GetBytes(buffer, 0, 16);
-            Span<byte> key = buffer;
-#endif
+            Random.Shared.NextBytes(key);
 
             this.initialState0 = 0x736f6d6570736575UL ^ BinaryPrimitives.ReadUInt64LittleEndian(key);
             this.initialState1 = 0x646f72616e646f6dUL ^ BinaryPrimitives.ReadUInt64LittleEndian(key.Slice(sizeof(ulong)));
-
-#if !SPAN_BUILTIN
-            ArrayPool<byte>.Shared.Return(buffer);
-#endif
         }
 
         /// <summary>Initializes a new instance of the <see cref="SipHash"/> class using the specified 128-bit key.</summary>
